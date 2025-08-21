@@ -1,3 +1,5 @@
+![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)
+
 # SOC Analyst Portfolio — Pavithra T
 
 Hands-on, reproducible mini-labs showing Tier-1 SOC skills with Windows + Splunk.
