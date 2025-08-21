@@ -22,6 +22,14 @@ Hands-on, reproducible mini-labs showing Tier-1 SOC skills with Windows + Splunk
 
 > **Note:** In queries, replace `index=wineventlog` with **your** index name if different, and use the field that exists in your data (`EventID` or `EventCode`).
 
+index=wineventlog (EventID=4103 OR EventID=4104)
+
+
+## Next
+- Add Sysmon & process creation (4688) detections
+- Basic brute-force detection & account lockout (4740)
+
+
 ## Quick Reproduce
 1) Enable PowerShell Script Block Logging (no gpedit) → see `/setup/windows_logging.md`  
 2) Tell Splunk to ingest `Microsoft-Windows-PowerShell/Operational` → see `/setup/splunk_inputs.md`  
