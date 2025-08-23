@@ -152,3 +152,67 @@ Splunk search for 4625
 
 Splunk search for 4103/4104
 
+
+
+## Splunk Windows Event Log User Field Extraction Setup
+
+This document summarizes the steps taken to configure Splunk for extracting user account information from Windows Security event logs, troubleshooting SID translation, and considerations on domain joining.
+
+---
+
+## Splunk Inputs Configuration for SID Translation
+
+In `inputs.conf` on the Splunk Universal Forwarder or Indexer:
+
+[WinEventLog://Security]
+disabled = 0
+evt_resolve_ad_obj = 1
+use_old_eventlog_api = 1
+
+evt_dc_name = your_domain_controller_name # Optional: specify DC(Domain controller
+) if needed
+
+
+- Save and restart Splunk forwarder after editing.
+
+---
+
+## Troubleshooting SID Translation Issues
+
+- Use `splunk btool inputs list --debug` to confirm settings are applied.
+- Check `splunkd.log` for errors: look for messages about binding to domain controllers, SID translation failures, or "NOT_TRANSLATED".
+- Common error example indicates: `Failed to get domain controller name with DsGetDcName: (1355)`.
+- This means the host cannot reach or discover a domain controller.
+
+---
+
+## Domain Joining Requirements
+
+- SID translation requires the forwarding host to be joined to an Active Directory domain.
+- Verify domain join status:
+  - Windows System > About should show domain membership.
+  - Local Account means not joined to any domain.
+- If not domain joined:
+  - SID translation will fail with “NOT_TRANSLATED” in logs.
+  - Join the host to the domain to enable SID resolution.
+
+---
+
+## Risks of Joining a Domain (Considerations)
+
+- Domain joining centralizes control and may restrict local settings.
+- Increased security risk if device or credentials are compromised.
+- Adds IT management overhead.
+- For personal or standalone systems, domain join may not be necessary or desired.
+
+---
+
+## Final Notes
+
+- If domain join is not possible or desired, user names may remain untranslated.
+- Alternative approaches: configuring local accounts or logging with user-friendly names if possible.
+- Always test configuration and monitor logs to verify correct field extraction.
+
+---
+
+*This README serves as a quick reference guide to configure and troubleshoot Windows Security logs and user field extraction in Splunk.*
