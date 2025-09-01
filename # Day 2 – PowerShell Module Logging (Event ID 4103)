@@ -1,0 +1,61 @@
+# Day 2 – PowerShell Module Logging (Event ID 4103)
+
+## Objective
+Enable PowerShell Module Logging to capture details about executed commands and modules.  
+This generates **Event ID 4103** which is useful for monitoring suspicious activity.
+
+---
+
+## Steps Taken
+
+### 1. Open Registry Editor
+- Press **Win + R**, type `regedit`, and press Enter.
+
+### 2. Navigate to Path
+HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\PowerShell
+
+
+### 3. Create ModuleLogging Key
+- Right-click on **PowerShell** → **New → Key** → Name it `ModuleLogging`.
+
+### 4. Enable Logging
+- Inside `ModuleLogging`:
+  - Right-click → **New → DWORD (32-bit) Value**  
+  - Name: `EnableModuleLogging`  
+  - Value: `1`
+
+### 5. Configure ModuleNames
+- Inside `ModuleLogging`:
+  - Right-click → **New → Key** → Name it `ModuleNames`
+  - Inside `ModuleNames`:
+    - Right-click → **New → String Value**
+    - Name: `*`
+    - Value: (leave blank or also `*`) → this enables logging for **all modules**
+
+Final Registry Path:
+...PowerShell
+└── ModuleLogging
+├── EnableModuleLogging = 1
+└── ModuleNames
+└── * (all modules logged)
+
+
+---
+
+## 6. Test Log Generation
+Open PowerShell and run:
+```powershell
+Get-Process
+Get-Service
+
+## Verify in Event Viewer
+Open Event Viewer → Applications and Services Logs → Microsoft → Windows → PowerShell → Operational
+Look for Event ID 4103 – Executing Pipeline
+
+
+## 7. Findings
+Successfully generated 4103 logs for executed commands.
+Logs provide command details including which module was used.
+
+
+
