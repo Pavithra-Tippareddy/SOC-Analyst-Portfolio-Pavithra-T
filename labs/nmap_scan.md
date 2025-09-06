@@ -52,6 +52,8 @@ Result:
 
 ## SOC Analyst Notes
 * Attackers use Nmap to probe networks for weaknesses.
+* In real-world SOC, closed ports may indicate a hardened system.
+* Open ports with unusual services are red flags for further investigation
 * Even when ports are closed, defenders can detect the scan attempts in firewall/SIEM logs.
 * In production, security teams monitor for repeated SYN scans as signs of reconnaissance.
 
