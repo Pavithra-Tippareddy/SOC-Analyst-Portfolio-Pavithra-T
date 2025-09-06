@@ -1,0 +1,46 @@
+# Lab: ICMP Packet Capture with Wireshark
+
+## Objective
+Capture and analyze **ICMP traffic (Ping)** between Kali and Ubuntu.
+
+---
+
+## Setup
+- Kali Linux → runs `ping`
+- Ubuntu (victim) → responds to ICMP
+- Wireshark running on Kali, interface: `eth0`
+
+---
+
+## Steps & Results
+
+## Step 1: Start Wireshark
+- Selected interface: `eth0`
+- Applied filter:
+icmp
+
+---
+
+## Step 2: Generate ICMP Traffic
+
+ping -c 4 192.168.30.128
+Step 3: Wireshark Capture
+Saw Echo Request (from Kali → Ubuntu).
+
+Saw Echo Reply (from Ubuntu → Kali).
+
+## Findings
+* ICMP round-trip verified.
+* Packet headers showed:
+* Source IP: Kali
+* Destination IP: Ubuntu
+* Protocol: ICMP
+
+Type: 8 (Echo Request), Type: 0 (Echo Reply)
+
+## SOC Analyst Notes
+* ICMP can be used by attackers for:
+* Host discovery (ping sweeps).
+* Covert channels (data exfiltration).
+* Analysts should monitor abnormal ICMP spikes.
+
